@@ -1,235 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>For my Sunshine❤️☀️</title>
-    <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #fce4ec;
-        margin: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        overflow: hidden;
-      }
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For my Sunshine ❤️☀️</title>
 
-      .envelope-wrapper {
-        position: relative;
-        cursor: pointer;
-        /* Container stays put, children move */
-        width: 300px;
-        height: 200px;
-      }
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fce4ec;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
 
-      .envelope {
-        position: relative;
-        width: 300px;
-        height: 200px;
-        background: #ff4d6d;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
-        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
+/* Envelope Wrapper */
+.envelope-wrapper {
+  position: relative;
+  cursor: pointer;
+  width: 300px;
+  height: 200px;
+}
 
-      /* When opened, the WHOLE envelope moves down */
-      .open .envelope {
-        transform: translateY(120px);
-      }
+/* Envelope Body */
+.envelope {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background: #ff4d6d;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+}
 
-      .envelope:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        z-index: 2;
-        border-top: 130px solid #ff758f;
-        border-right: 150px solid transparent;
-        border-left: 150px solid transparent;
-        transform-origin: top;
-        transition: all 0.6s ease-in-out;
-      }
-      
-      .envelope:after {
-        content: "";
-        position: absolute;
-        z-index: 2;
-        width: 0;
-        height: 0;
-        border-top: 130px solid transparent;
-        border-right: 150px solid #ff4d6d;
-        border-bottom: 100px solid #ff4d6d;
-        border-left: 150px solid #ff4d6d;
-        bottom: 0;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
+/* Envelope Flap */
+.envelope:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  border-top: 130px solid #ff758f;
+  border-right: 150px solid transparent;
+  border-left: 150px solid transparent;
+  transform-origin: top;
+  transition: transform 0.6s ease-in-out;
+}
 
-      .letter {
-        position: absolute;
-        left: 10px;
-        bottom: 10px; /* Stay inside the envelope */
-        width: 280px;
-        height: 180px;
-        background: white;
-        padding: 25px 20px;
-        box-sizing: border-box;
-        text-align: center;
-        transition: all 0.8s ease-in-out;
-        z-index: 1;
-        border-radius: 5px;
-        overflow-y: auto;
-      }
+/* Envelope Bottom Shape */
+.envelope:after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-top: 130px solid transparent;
+  border-right: 150px solid #ff4d6d;
+  border-bottom: 100px solid #ff4d6d;
+  border-left: 150px solid #ff4d6d;
+  bottom: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 
-      /* When the envelope moves down, the letter shoots UP relative to it */
-      .open .letter {
-        z-index: 4;
-        height: 400px;
-        transform: translateY(-320px); /* Shoots up exactly where we need it */
-        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-      }
+/* Letter */
+.letter {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  width: 280px;
+  height: 160px;
+  background: white;
+  padding: 25px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 5px;
+  z-index: 1;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              height 0.5s ease;
+  overflow-y: auto;
+}
 
-      .heart-seal {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 3;
-        font-size: 45px;
-        transition: all 0.4s;
-        animation: pulse 1.5s infinite;
-      }
+/* When Open */
+.open .letter {
+  transform: translateY(-240px);
+  height: 420px;
+  z-index: 5;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
 
-      @keyframes pulse {
-        0% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.1); }
-        100% { transform: translate(-50%, -50%) scale(1); }
-      }
+/* Flap Animation */
+.open .envelope:before {
+  transform: rotateX(180deg);
+}
 
-      .open .envelope:before { transform: rotateX(180deg); z-index: 0; }
-      .open .heart-seal { opacity: 0; pointer-events: none; }
+/* Heart Seal */
+.heart-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 45px;
+  z-index: 4;
+  animation: pulse 1.5s infinite;
+  transition: opacity 0.4s;
+}
 
-      .btn-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        margin-top: 20px;
-        opacity: 0;
-        transition: opacity 0.5s 0.8s;
-      }
+.open .heart-seal {
+  opacity: 0;
+}
 
-      .open .btn-container { opacity: 1; }
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
 
-      button {
-        padding: 12px 22px;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.3s;
-      }
+/* Buttons */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 0.5s 0.6s;
+}
 
-      #yesBtn { background-color: #ff4d6d; color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
-      #noBtn { background-color: #f8f8f8; color: #888; border: 1px solid #ddd; position: relative; }
+.open .btn-container {
+  opacity: 1;
+}
 
-      .celebrate-title { font-family: "Brush Script MT", cursive; font-size: 2.2rem; color: #ff4d6d; margin: 0; }
-      .date-text { font-weight: 800; color: #d00000; margin: 10px 0; display: block; }
-      .success-msg { display: none; }
-      .love-gif { width: 100%; max-width: 180px; border-radius: 15px; margin-top: 15px; }
+button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-      .floating-heart {
-        position: fixed;
-        top: 100vh;
-        z-index: 1000;
-        pointer-events: none;
-        animation: floatUp 4s linear forwards;
-      }
+#yesBtn {
+  background-color: #ff4d6d;
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+}
 
-      @keyframes floatUp {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="envelope-wrapper" id="envelopeWrapper">
-      <div class="envelope">
-        <div class="heart-seal">❤️</div>
-        <div class="letter" id="letter">
-          <div id="content">
-            <h2>Wait, my sunshine… <br>naa koy pangutana.</h2>
-            <p style="font-size: 0.95rem; color: #555;">Hapit na ang Valentine’s Day, love. Makig-date ka nako? ✨</p>
-            <p style="color: #ff4d6d;"><strong>Will you be my Valentine?</strong></p>
+#noBtn {
+  background-color: #f8f8f8;
+  color: #888;
+  border: 1px solid #ddd;
+  position: relative;
+}
 
-            <div class="btn-container">
-              <button id="yesBtn">YES! 😍</button>
-              <button id="noBtn">No</button>
-            </div>
-          </div>
-          
-          <div id="celebration" class="success-msg">
-            <h2 class="celebrate-title">It's a date! ❤️</h2>
-            <span class="date-text">02/14/2026</span>
-            <button id="calBtn" style="background-color: #4285F4; color: white; margin-bottom: 10px;">🗓️ Add to Calendar</button>
-            <p style="font-size: 0.9rem; margin: 10px 0;">Magkita ta puhon, Love. 🥰✨</p>
-            <img class="love-gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnd1ejZuc3YyOTZmaHBzZnhtOTQ0OGR2Y3dtYmpieHhyaDdma2t6NiZlcD12MV9pbnRlcm5hbF9naWZ_YnlfaWQmY3Q9Zw/wvYNSqBAMDVx8CEYkt/giphy.gif" />
-          </div>
+/* Celebration */
+.celebrate-title {
+  font-family: "Brush Script MT", cursive;
+  font-size: 2.2rem;
+  color: #ff4d6d;
+  margin: 0;
+}
+
+.date-text {
+  font-weight: 800;
+  color: #d00000;
+  margin: 10px 0;
+  display: block;
+}
+
+.success-msg {
+  display: none;
+}
+
+.love-gif {
+  width: 100%;
+  max-width: 180px;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+
+/* Floating Hearts */
+.floating-heart {
+  position: fixed;
+  top: 100vh;
+  z-index: 1000;
+  pointer-events: none;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope-wrapper" id="envelopeWrapper">
+  <div class="envelope">
+    <div class="heart-seal">❤️</div>
+
+    <div class="letter" id="letter">
+      <div id="content">
+        <h2>Wait, my sunshine… <br>naa koy pangutana.</h2>
+        <p style="font-size: 0.95rem; color: #555;">
+          Hapit na ang Valentine’s Day, love. Makig-date ka nako? ✨
+        </p>
+        <p style="color: #ff4d6d;"><strong>Will you be my Valentine?</strong></p>
+
+        <div class="btn-container">
+          <button id="yesBtn">YES! 😍</button>
+          <button id="noBtn">No</button>
         </div>
       </div>
+
+      <div id="celebration" class="success-msg">
+        <h2 class="celebrate-title">It's a date! ❤️</h2>
+        <span class="date-text">02/14/2026</span>
+        <button id="calBtn" style="background:#4285F4;color:white;margin-bottom:10px;">
+          🗓️ Add to Calendar
+        </button>
+        <p style="font-size:0.9rem;margin:10px 0;">
+          Magkita ta puhon, Love. 🥰✨
+        </p>
+        <img class="love-gif"
+          src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnd1ejZuc3YyOTZmaHBzZnhtOTQ0OGR2Y3dtYmpieHhyaDdma2t6NiZlcD12MV9pbnRlcm5hbF9naWZ_YnlfaWQmY3Q9Zw/wvYNSqBAMDVx8CEYkt/giphy.gif">
+      </div>
+
     </div>
+  </div>
+</div>
 
-    <script>
-      const wrapper = document.getElementById("envelopeWrapper");
-      const noBtn = document.getElementById("noBtn");
-      const yesBtn = document.getElementById("yesBtn");
-      const calBtn = document.getElementById("calBtn");
-      const content = document.getElementById("content");
-      const celebration = document.getElementById("celebration");
-      const letter = document.getElementById("letter");
+<script>
+const wrapper = document.getElementById("envelopeWrapper");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const content = document.getElementById("content");
+const celebration = document.getElementById("celebration");
+const letter = document.getElementById("letter");
 
-      wrapper.addEventListener("click", (e) => {
-        if (!e.target.closest('button')) {
-          wrapper.classList.add("open");
-        }
-      });
+wrapper.addEventListener("click", (e) => {
+  if (!e.target.closest("button")) {
+    wrapper.classList.add("open");
+  }
+});
 
-      const moveButton = (e) => {
-        e.stopPropagation();
-        const x = (Math.random() - 0.5) * 200;
-        const y = (Math.random() - 0.5) * 150;
-        noBtn.style.transform = `translate(${x}px, ${y}px)`;
-      };
+const moveButton = (e) => {
+  e.stopPropagation();
+  const x = (Math.random() - 0.5) * 200;
+  const y = (Math.random() - 0.5) * 150;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+};
 
-      noBtn.addEventListener("mouseover", moveButton);
-      noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(e); });
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  moveButton(e);
+});
 
-      yesBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        content.style.display = "none";
-        celebration.style.display = "block";
-        letter.scrollTop = 0;
+yesBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  content.style.display = "none";
+  celebration.style.display = "block";
+  letter.scrollTop = 0;
 
-        for (let i = 0; i < 40; i++) {
-          setTimeout(createHeart, i * 60);
-        }
-        setInterval(createHeart, 250);
-      });
+  for (let i = 0; i < 40; i++) {
+    setTimeout(createHeart, i * 60);
+  }
 
-      function createHeart() {
-        const heart = document.createElement("div");
-        const hearts = ["❤️", "💖", "💗", "💕"];
-        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.className = "floating-heart";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 15 + "px";
-        const duration = Math.random() * 2 + 3;
-        heart.style.animationDuration = duration + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), duration * 1000);
-      }
-    </script>
-  </body>
+  setInterval(createHeart, 300);
+});
+
+function createHeart() {
+  const heart = document.createElement("div");
+  const hearts = ["❤️", "💖", "💗", "💕"];
+  heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+  heart.className = "floating-heart";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+</script>
+
+</body>
 </html>
